@@ -29,11 +29,11 @@
         <form>
           <div class="row">
             <div class="input-field col s6">
-                <input [ngxTimepicker]="startTime" value="{{ appointment.startTime | date:'shortTime' }}" name="startTime" pInputText ngModel="appointment.startTime" required >
+                <input [ngxTimepicker]="startTime" name="startTime" pInputText [(ngModel)]="appointment.startTime" required >
                 <ngx-material-timepicker #startTime aria-placeholder="Start Time"></ngx-material-timepicker>
             </div>
             <div class="input-field col s6">
-                <input [ngxTimepicker]="endTime" value="{{ appointment.endTime | date:'shortTime' }}" name="endTime" pInputText [(ngModel)]="appointment.endTime" required >
+                <input [ngxTimepicker]="endTime" name="endTime" pInputText [(ngModel)]="appointment.endTime" required >
                 <ngx-material-timepicker #endTime aria-placeholder="End Time"></ngx-material-timepicker>
             </div>
           </div>

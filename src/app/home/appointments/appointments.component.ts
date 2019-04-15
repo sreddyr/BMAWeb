@@ -66,10 +66,10 @@ export class AppointmentsComponent implements OnInit {
 
   onEdit(appointment: Appointment) {
     this.appointment = appointment;
-    const datePipe = new DatePipe('en-UTC');
-    const formatedyear = datePipe.transform(appointment.startTime, 'dd-MM-yyyy hh:mm:ss a');
-    console.log(new Date(formatedyear));
-    this.startNewDate = formatedyear;
+    // const datePipe = new DatePipe('en-UTC');
+    // const formatedyear = datePipe.transform(appointment.startTime, 'dd-MM-yyyy hh:mm:ss a');
+    // console.log(new Date(formatedyear));
+    // this.startNewDate = formatedyear;
     this.isAddNew = false;
     this.displayGrid = false;
     this.displayCreate = true;
