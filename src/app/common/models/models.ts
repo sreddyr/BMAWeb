@@ -30,8 +30,8 @@ export class Appointment {
     Company_ID: number;
     // tslint:disable-next-line:variable-name
     Appointment_ID: number;
-    startTime: Time;
-    EndTime: Time;
+    startTime: Date;
+    endTime: Date;
     Info: string;
     CompnayName: string;
     EmailAddress: string;
@@ -40,5 +40,6 @@ export class Appointment {
     MobileNumber: string;
     WorkNumber: string;
     FullName: string;
+    selectDate: Date;
 }
 

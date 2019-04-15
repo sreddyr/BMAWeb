@@ -4,8 +4,7 @@ import { AppointmentServices } from '../../common/services/appointment.services'
 import { Router } from '@angular/router';
 import { CommonService } from '../../common/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
-import { stringify } from 'querystring';
+
 
 
 @Component({
@@ -24,9 +23,10 @@ export class AppointmentsComponent implements OnInit {
   isAddNew = false;
   startNewDate: string;
   endNewDate: string;
+  selectDate: Date;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private toastr: ToastrService, private appointmentService: AppointmentServices, private router: Router, private commonService: CommonService) { }
+  constructor( private toastr: ToastrService, private appointmentService: AppointmentServices, private router: Router, private commonService: CommonService) { }
 
   ngOnInit() {
     this.loadAppointments();
@@ -35,7 +35,6 @@ export class AppointmentsComponent implements OnInit {
   loadAppointments() {
         this.appointmentService.getAppointment().subscribe((appointmentsList: Appointment[]) => {
           this.appointments = appointmentsList ;
-          console.log(this.appointments);
         }, ( error ) => {
         });
     }
@@ -50,6 +49,7 @@ export class AppointmentsComponent implements OnInit {
   }
 
   onSave() {
+      this.addTimeToDate();
       this.appointmentService.saveOrUpdateAppointment(this.appointment).subscribe((response: string) => {
       if (response) {
         this.toastr.error(response, 'Appointment');
@@ -66,10 +66,7 @@ export class AppointmentsComponent implements OnInit {
 
   onEdit(appointment: Appointment) {
     this.appointment = appointment;
-    // const datePipe = new DatePipe('en-UTC');
-    // const formatedyear = datePipe.transform(appointment.startTime, 'dd-MM-yyyy hh:mm:ss a');
-    // console.log(new Date(formatedyear));
-    // this.startNewDate = formatedyear;
+    this.appointment.selectDate = new Date(appointment.startTime);
     this.isAddNew = false;
     this.displayGrid = false;
     this.displayCreate = true;
@@ -90,6 +87,18 @@ export class AppointmentsComponent implements OnInit {
         });
       }
   }
+
+  addTimeToDate() {
+      const slectedYear = this.appointment.selectDate.getFullYear();
+      const slectedMonth = this.appointment.selectDate.getMonth();
+      const slectedDay = this.appointment.selectDate.getDate();
+      const startTime = new Date(this.appointment.startTime);
+      const endTime = new Date(this.appointment.endTime);
+      // tslint:disable-next-line:max-line-length
+      this.appointment.startTime = new Date(slectedYear, slectedMonth, slectedDay, startTime.getHours(), startTime.getMinutes());
+      // tslint:disable-next-line:max-line-length
+      this.appointment.endTime = new Date(slectedYear, slectedMonth, slectedDay, endTime.getHours(), endTime.getMinutes());
+    }
 
 }
 

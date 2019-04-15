@@ -15,8 +15,8 @@
     <tbody>
         <tr *ngFor='let appt of appointments'>
             <td> {{appt.fullName}} </td> 
-            <td> {{ appt.startTime | date:'shortTime' }} </td>  
-            <td> {{ appt.endTime | date:'shortTime' }} </td> 
+            <td> {{ appt.startTime | date:'MM/dd/yyyy HH:mm' }} </td>  
+            <td> {{ appt.endTime | date:'MM/dd/yyyy HH:mm' }} </td> 
             <td> {{appt.info}} </td> 
             <td><button (click)='onEdit(appt)' class='btn-floating btn-small waves-effect waves-light blue right'>Edit</button></td>
             <td><button (click)='onDelete(appt.appointment_ID)' class='btn-floating btn-small waves-effect waves-light red right'>X</button></td>
@@ -26,29 +26,37 @@
 </div>
 <div class="ui-g" *ngIf='displayCreate'>
     <div class="row">
-        <form>
-          <div class="row">
-            <div class="input-field col s6">
-                <input [ngxTimepicker]="startTime" name="startTime" pInputText [(ngModel)]="appointment.startTime" required >
-                <ngx-material-timepicker #startTime aria-placeholder="Start Time"></ngx-material-timepicker>
+        <form #AppForm="ngForm" (ngSubmit)="onSave()">
+            <div class="row">
+                <div class="col s6">
+                  <label for="selectDate">Date</label>
+                  <input [owlDateTimeTrigger]="selectDate" name="selectDate" [owlDateTime]="selectDate" [(ngModel)]="appointment.selectDate">
+                  <owl-date-time [pickerType]="'calendar'" #selectDate></owl-date-time>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input [ngxTimepicker]="endTime" name="endTime" pInputText [(ngModel)]="appointment.endTime" required >
-                <ngx-material-timepicker #endTime aria-placeholder="End Time"></ngx-material-timepicker>
+          <div class="row">
+              <div class="col s6">
+                <label for="endTime">Start Time</label>   
+                <input [owlDateTimeTrigger]="startTime" [owlDateTime]="startTime" [(ngModel)]="appointment.startTime" name="startTime" required>
+                <owl-date-time [pickerType]="'timer'" #startTime></owl-date-time>
+              </div>
+            <div class="col s6">
+                <label for="endTime">End Time</label>    
+                <input [owlDateTimeTrigger]="endTime" [min]="appointment.startTime" [owlDateTime]="endTime" [(ngModel)]="appointment.endTime" name="endTime" required>
+                <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-                <input name="info" type="text" pInputText [(ngModel)]="appointment.info" #appointmentInfo="ngModel" required>
-                <label for="info">Information</label>
+            <div class="col s12">
+              <label for="info">Information</label>  
+              <input name="info" type="text" pInputText [(ngModel)]="appointment.info" #appointmentInfo="ngModel" required>
             </div>
           </div>
           <div class="row center">
             <div class="input-field col s6">
-                <button (click)="onSave()"   class="btn-small btn-submit">Submit</button>
+                <button [disabled]="!AppForm.valid" class="btn-small btn-submit">Submit</button>
             </div>
             <div class="input-field col s6">
-                    
                     <button (click)="onCancel()"  class="btn-small btn-cancel">Cancel</button>
             </div>
             

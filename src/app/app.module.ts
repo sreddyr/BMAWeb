@@ -16,6 +16,7 @@ import { AppRoutes } from './app.routes';
 import { AppointmentsComponent } from './home/appointments/appointments.component';
 import { AppointmentServices } from './common/services/appointment.services';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -33,6 +34,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     AppRoutes,
     NgxMaterialTimepickerModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     ToastrModule.forRoot(),
   ],
   providers: [EmployeeServices, AppointmentServices, CommonService, GlobalConstants, AuthGuard,
