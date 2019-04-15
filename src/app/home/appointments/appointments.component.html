@@ -1,0 +1,58 @@
+<div class="ui-g" *ngIf='displayGrid'>
+<div class="row">
+    <a (click)="onAddNew()" class="btn-floating btn-small waves-effect waves-light green right"><i class="material-icons">+</i></a>
+  </div>
+  <table class="highlight responsive-table">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Info</th>
+          <th class="right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let appt of appointments'>
+            <td> {{appt.fullName}} </td> 
+            <td> {{ appt.startTime | date:'shortTime' }} </td>  
+            <td> {{ appt.endTime | date:'shortTime' }} </td> 
+            <td> {{appt.info}} </td> 
+            <td><button (click)='onEdit(appt)' class='btn-floating btn-small waves-effect waves-light blue right'>Edit</button></td>
+            <td><button (click)='onDelete(appt.appointment_ID)' class='btn-floating btn-small waves-effect waves-light red right'>X</button></td>
+          </tr>
+    </tbody>
+  </table>
+</div>
+<div class="ui-g" *ngIf='displayCreate'>
+    <div class="row">
+        <form>
+          <div class="row">
+            <div class="input-field col s6">
+                <input [ngxTimepicker]="startTime" value="{{ appointment.startTime | date:'shortTime' }}" name="startTime" pInputText ngModel="appointment.startTime" required >
+                <ngx-material-timepicker #startTime aria-placeholder="Start Time"></ngx-material-timepicker>
+            </div>
+            <div class="input-field col s6">
+                <input [ngxTimepicker]="endTime" value="{{ appointment.endTime | date:'shortTime' }}" name="endTime" pInputText [(ngModel)]="appointment.endTime" required >
+                <ngx-material-timepicker #endTime aria-placeholder="End Time"></ngx-material-timepicker>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+                <input name="info" type="text" pInputText [(ngModel)]="appointment.info" #appointmentInfo="ngModel" required>
+                <label for="info">Information</label>
+            </div>
+          </div>
+          <div class="row center">
+            <div class="input-field col s6">
+                <button (click)="onSave()"   class="btn-small btn-submit">Submit</button>
+            </div>
+            <div class="input-field col s6">
+                    
+                    <button (click)="onCancel()"  class="btn-small btn-cancel">Cancel</button>
+            </div>
+            
+         </div>
+        </form>
+      </div>
+</div>
